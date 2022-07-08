@@ -48,7 +48,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1'
+    def coroutines_version = "1.6.0"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutines_version"
 
     // Livedata
     implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0'
@@ -58,6 +60,7 @@ dependencies {
     def retrofitVersion = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
     // Navigation
     def nav_version = "2.3.5"
