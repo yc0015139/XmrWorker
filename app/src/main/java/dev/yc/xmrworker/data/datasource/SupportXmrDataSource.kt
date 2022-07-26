@@ -6,11 +6,11 @@ import dev.yc.xmrworker.model.MinerStat
 interface SupportXmrDataSource {
 
     suspend fun fetchIdentifiers(
-        address: String,
+        address: String?,
     ): ApiResult<List<String>>
 
     suspend fun fetchMinerStatsById(
-        address: String,
+        address: String?,
         id: String,
     ): ApiResult<MinerStat>
 }

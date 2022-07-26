@@ -9,7 +9,7 @@ class SupportXmrDataSourceImpl(
 ) : SupportXmrDataSource {
 
     override suspend fun fetchIdentifiers(
-        address: String,
+        address: String?
     ) = ApiUtil.executeAndParse(
         apiScope = {
             service.fetchIdentifiers(address)
@@ -20,7 +20,7 @@ class SupportXmrDataSourceImpl(
     )
 
     override suspend fun fetchMinerStatsById(
-        address: String,
+        address: String?,
         id: String,
     ) = ApiUtil.executeAndParse(
         apiScope = {
