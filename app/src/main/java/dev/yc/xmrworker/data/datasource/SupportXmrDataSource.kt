@@ -1,7 +1,7 @@
 package dev.yc.xmrworker.data.datasource
 
 import dev.yc.xmrworker.data.remote.ApiResult
-import dev.yc.xmrworker.model.MinerStat
+import dev.yc.xmrworker.model.MinerData
 
 interface SupportXmrDataSource {
 
@@ -9,8 +9,8 @@ interface SupportXmrDataSource {
         address: String?,
     ): ApiResult<List<String>>
 
-    suspend fun fetchMinerStatsById(
+    suspend fun fetchEachMinerDataById(
         address: String?,
         id: String,
-    ): ApiResult<MinerStat>
+    ): ApiResult<MinerData>
 }

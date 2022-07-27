@@ -48,13 +48,13 @@ class SupportXmrDataSourceTest {
     }
 
     @Test
-    fun fetchMinerStats_idOfMinerIsNotGlobalIdOnApiSuccess() = runTest {
-        val apiResult = dataSource.fetchMinerStatsById(
+    fun fetchEachMinerData_idOfMinerIsNotGlobalIdOnApiSuccess() = runTest {
+        val apiResult = dataSource.fetchEachMinerDataById(
             address = ADDRESS,
             id = IDENTIFIER,
         )
 
-        val minerStat = when (apiResult) {
+        val minerData = when (apiResult) {
             is ApiResult.Success -> {
                 apiResult.result
             }
@@ -62,6 +62,6 @@ class SupportXmrDataSourceTest {
                 fail("Something wrong on network connection.")
             }
         }
-        assertNotEquals(GLOBAL_ID, minerStat.id)
+        assertNotEquals(GLOBAL_ID, minerData.id)
     }
 }

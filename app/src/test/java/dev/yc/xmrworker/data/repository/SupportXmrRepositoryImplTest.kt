@@ -3,7 +3,7 @@ package dev.yc.xmrworker.data.repository
 import dev.yc.xmrworker.data.ADDRESS
 import dev.yc.xmrworker.data.IDENTIFIER
 import dev.yc.xmrworker.data.datasource.FakeSupportXmrDataSource
-import dev.yc.xmrworker.model.MinerStat
+import dev.yc.xmrworker.model.MinerData
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -20,7 +20,7 @@ class SupportXmrRepositoryImplTest {
     fun setup() {
         // Arrange
         val testData = mapOf(
-            IDENTIFIER to MinerStat(
+            IDENTIFIER to MinerData(
                 hash = "7000",
                 id = IDENTIFIER,
                 invalidShares = 5,

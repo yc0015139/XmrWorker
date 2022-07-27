@@ -2,7 +2,7 @@ package dev.yc.xmrworker.model
 
 import com.google.gson.annotations.SerializedName
 
-data class MinerStat(
+data class MinerData(
     val hash: String,
     @SerializedName("identifer") val id: String,
     val invalidShares: Int,

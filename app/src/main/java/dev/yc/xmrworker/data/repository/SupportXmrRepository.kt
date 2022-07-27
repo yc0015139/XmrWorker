@@ -1,8 +1,8 @@
 package dev.yc.xmrworker.data.repository
 
-import dev.yc.xmrworker.model.MinerStat
+import dev.yc.xmrworker.model.MinerData
 import kotlinx.coroutines.flow.Flow
 
 interface SupportXmrRepository {
-    fun fetchMiners(address: String?): Flow<List<MinerStat>>
+    fun fetchMiners(address: String?): Flow<List<MinerData>>
 }

@@ -1,6 +1,6 @@
 package dev.yc.xmrworker.data.service
 
-import dev.yc.xmrworker.model.MinerStat
+import dev.yc.xmrworker.model.MinerData
 import dev.yc.xmrworker.model.Worker
 import retrofit2.Response
 import retrofit2.http.GET
@@ -45,10 +45,10 @@ interface SupportXmrService {
     */
 
     @GET("api/miner/{address}/stats/{identifier}")
-    suspend fun fetchMinerStatByIdentifier(
+    suspend fun fetchEachMinerDataByIdentifier(
         @Path("address") addressOfWallet: String? = null,
         @Path("identifier") id: String? = null,
-    ): Response<MinerStat>
+    ): Response<MinerData>
     /*
         {
             "lts": 1657266133,
