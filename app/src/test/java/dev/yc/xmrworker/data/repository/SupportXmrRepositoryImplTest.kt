@@ -3,6 +3,7 @@ package dev.yc.xmrworker.data.repository
 import dev.yc.xmrworker.data.ADDRESS
 import dev.yc.xmrworker.data.IDENTIFIER
 import dev.yc.xmrworker.data.datasource.FakeSupportXmrDataSource
+import dev.yc.xmrworker.model.MinerStat
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Assertions.assertNotNull
@@ -18,11 +19,19 @@ class SupportXmrRepositoryImplTest {
     @BeforeAll
     fun setup() {
         // Arrange
+        val testData = mapOf(
+            IDENTIFIER to MinerStat(
+                hash = "7000",
+                id = IDENTIFIER,
+                invalidShares = 5,
+                lts = 1657266133,
+                totalHash = "81130718490",
+                validShares = 269930,
+            )
+        )
         repository = SupportXmrRepositoryImpl(
-            dataSource = FakeSupportXmrDataSource(
-                testIds = listOf(IDENTIFIER)
-            ),
-            dispatcher = UnconfinedTestDispatcher()
+            dataSource = FakeSupportXmrDataSource(testData),
+            dispatcher = UnconfinedTestDispatcher(),
         )
     }
 
@@ -31,9 +40,9 @@ class SupportXmrRepositoryImplTest {
         // Act
         val flow = repository.fetchMiners(ADDRESS)
 
-        flow.collect {
+        flow.collect { actual ->
             // Assert
-            assertNotNull(it)
+            assertNotNull(actual)
         }
     }
 }

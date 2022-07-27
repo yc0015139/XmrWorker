@@ -12,6 +12,7 @@ class SupportXmrRepositoryImpl(
     private val dataSource: SupportXmrDataSource,
     private val dispatcher: CoroutineDispatcher,
 ) : SupportXmrRepository {
+
     override fun fetchMiners(address: String?): Flow<List<MinerStat>> {
         return flow {
             when (val apiResultOfIds = dataSource.fetchIdentifiers(address)) {
