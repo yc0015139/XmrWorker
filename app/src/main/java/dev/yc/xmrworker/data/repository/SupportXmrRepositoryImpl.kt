@@ -2,8 +2,8 @@ package dev.yc.xmrworker.data.repository
 
 import dev.yc.xmrworker.data.datasource.SupportXmrDataSource
 import dev.yc.xmrworker.data.remote.ApiResult
-import dev.yc.xmrworker.ui.mineritem.MinerState
-import dev.yc.xmrworker.ui.mineritem.MinerUiState
+import dev.yc.xmrworker.ui.myminer.mineritem.MinerState
+import dev.yc.xmrworker.ui.myminer.mineritem.MinerUiState
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

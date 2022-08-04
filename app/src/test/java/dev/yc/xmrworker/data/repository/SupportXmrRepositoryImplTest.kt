@@ -5,8 +5,8 @@ import dev.yc.xmrworker.data.IDENTIFIER
 import dev.yc.xmrworker.data.datasource.FakeSupportXmrDataSource
 import dev.yc.xmrworker.data.remote.ApiResult
 import dev.yc.xmrworker.model.MinerData
-import dev.yc.xmrworker.ui.mineritem.MinerState
-import dev.yc.xmrworker.ui.mineritem.MinerUiState
+import dev.yc.xmrworker.ui.myminer.mineritem.MinerState
+import dev.yc.xmrworker.ui.myminer.mineritem.MinerUiState
 import dev.yc.xmrworker.utils.ApiUtil
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestDispatcher

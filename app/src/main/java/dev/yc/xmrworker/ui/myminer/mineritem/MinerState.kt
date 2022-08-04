@@ -1,4 +1,4 @@
-package dev.yc.xmrworker.ui.mineritem
+package dev.yc.xmrworker.ui.myminer.mineritem
 
 data class MinerState(
     val hash: String,

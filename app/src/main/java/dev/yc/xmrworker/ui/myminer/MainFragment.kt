@@ -1,4 +1,4 @@
-package dev.yc.xmrworker.ui.main
+package dev.yc.xmrworker.ui.myminer
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,7 +12,7 @@ class MainFragment : Fragment() {
     private var _binding: MainFragmentBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MinersViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -28,13 +28,11 @@ class MainFragment : Fragment() {
 
     private fun setupEvents() {
         binding.btnChange.setOnClickListener {
-            viewModel.doSomething()
+
         }
     }
 
     private fun setupObservers() {
-        viewModel.someText.observe(viewLifecycleOwner) {
-            binding.tvMessage.text = it
-        }
+
     }
 }
