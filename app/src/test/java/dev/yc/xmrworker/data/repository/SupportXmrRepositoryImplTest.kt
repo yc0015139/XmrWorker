@@ -19,13 +19,13 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.api.TestInstance.Lifecycle
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @TestInstance(Lifecycle.PER_CLASS)
 class SupportXmrRepositoryImplTest {
     private lateinit var repository: SupportXmrRepository
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher()
     private lateinit var testData: Map<String, MinerData>
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     @BeforeEach
     fun setup() {
         // Arrange
