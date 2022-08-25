@@ -8,3 +8,7 @@ typealias SingleEvent = Event<Unit>
 fun MutableLiveData<SingleEvent>.invoke() {
     this.value = Event(Unit)
 }
+
+fun MutableLiveData<SingleEvent>.invokeWithPost() {
+    this.postValue(Event(Unit))
+}

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginVertical="16dp">
+
+        <TextView
+            android:id="@+id/tv_miner_id_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Miner ID: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_miner_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_miner_id_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_id_title"
+            tools:text="Some id" />
+
+        <TextView
+            android:id="@+id/tv_miner_timestamp_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Timestamp: "
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_id" />
+
+        <TextView
+            android:id="@+id/tv_miner_timestamp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="150dp"
+            android:paddingBottom="16dp"
+            app:layout_constraintStart_toStartOf="@+id/tv_miner_timestamp_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_timestamp_title"
+            tools:text="9999999" />
+
+        <TextView
+            android:id="@+id/tv_miner_hash_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hash: "
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_miner_id_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_miner_id_title" />
+
+        <TextView
+            android:id="@+id/tv_miner_hash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tv_miner_hash_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_hash_title"
+            tools:text="7000" />
+
+        <TextView
+            android:id="@+id/tv_miner_hash_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" H/s"
+            app:layout_constraintStart_toEndOf="@+id/tv_miner_hash"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_hash_title" />
+
+        <TextView
+            android:id="@+id/tv_miner_total_hash_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total hashes: "
+            app:layout_constraintStart_toStartOf="@+id/tv_miner_hash_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_miner_timestamp_title" />
+
+        <TextView
+            android:id="@+id/tv_miner_total_hash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/tv_miner_total_hash_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_miner_total_hash_title"
+            tools:text="987654321012345678" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
