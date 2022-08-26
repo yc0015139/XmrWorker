@@ -58,7 +58,7 @@ class MinersViewModelTest {
     }
 
     @Test
-    fun fetchMinerDataWithError_errorLivedataInvoked() = runTest {
+    fun fetchMinerDataWithError_errorEventInvoked() = runTest {
         // Arrange
         testData = listOf(
             MinerUiState.Error
@@ -77,11 +77,11 @@ class MinersViewModelTest {
         viewModel.fetchMiners()
 
         // Assert
-        assertEquals(excepted, viewModel.error.value?.peekContent())
+        assertEquals(excepted, viewModel.errorEvent.value?.peekContent())
     }
 
     @Test
-    fun fetchMinerDataWithException_errorLivedataInvoked() = runTest {
+    fun fetchMinerDataWithException_errorEventInvoked() = runTest {
         // Arrange
         testData = listOf(
             MinerUiState.Exception
@@ -100,6 +100,36 @@ class MinersViewModelTest {
         viewModel.fetchMiners()
 
         // Assert
-        assertEquals(excepted, viewModel.error.value?.peekContent())
+        assertEquals(excepted, viewModel.errorEvent.value?.peekContent())
+    }
+
+    @Test
+    fun doRefresh_refreshedEventInvoked() {
+        // Arrange
+        testData = listOf(
+            MinerUiState.Success(
+                minerState = MinerState(
+                    hash = "7000",
+                    id = IDENTIFIER,
+                    lastTimeInTimestamp = 1657266133,
+                    totalHash = "81130718490",
+                )
+            )
+        )
+        viewModel = MinersViewModel(
+            address = ADDRESS,
+            repository = FakeSupportXmrRepository(
+                testData = testData,
+                dispatcher = testDispatcher,
+            ),
+            dispatcher = testDispatcher,
+        )
+        val excepted = Unit
+
+        // Action
+        viewModel.doRefresh()
+
+        // Assert
+        assertEquals(excepted, viewModel.refreshedEvent.value?.peekContent())
     }
 }

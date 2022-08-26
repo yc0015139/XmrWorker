@@ -37,10 +37,17 @@ class MinersViewModel(
     private var _minerData = MutableLiveData<List<MinerState>>()
     val minerData: LiveData<List<MinerState>> get() = _minerData
 
-    private var _error = MutableLiveData<SingleEvent>()
-    val error: LiveData<SingleEvent> get() = _error
+    private var _errorEvent = MutableLiveData<SingleEvent>()
+    val errorEvent: LiveData<SingleEvent> get() = _errorEvent
+
+    private val _refreshedEvent = MutableLiveData<SingleEvent>()
+    val refreshedEvent: LiveData<SingleEvent> get() = _refreshedEvent
 
     init {
+        fetchMiners()
+    }
+
+    fun doRefresh() {
         fetchMiners()
     }
 
@@ -52,6 +59,7 @@ class MinersViewModel(
                 }
                 .collect {
                     _minerData.postValue(it)
+                    _refreshedEvent.invokeWithPost()
                 }
         }
     }
@@ -63,7 +71,7 @@ class MinersViewModel(
                 is MinerUiState.Success -> miners.add(uiState.minerState)
                 else -> {
                     miners.clear()
-                    _error.invokeWithPost()
+                    _errorEvent.invokeWithPost()
                     break
                 }
             }

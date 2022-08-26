@@ -33,11 +33,15 @@ class MinersFragment : Fragment() {
     }
 
     private fun setupEvents() {
-        viewModel.error.observe(viewLifecycleOwner, EventObserver {
+        viewModel.errorEvent.observe(viewLifecycleOwner, EventObserver {
             view?.let {
                 Snackbar.make(it, "Something wrong when loading data", Snackbar.LENGTH_LONG)
                     .show()
             }
+        })
+
+        viewModel.refreshedEvent.observe(viewLifecycleOwner, EventObserver {
+            binding.srlFetchMiners.isRefreshing = false
         })
     }
 
@@ -48,7 +52,14 @@ class MinersFragment : Fragment() {
     }
 
     private fun setupViews() {
+        setupRefresh()
         setupMiners()
+    }
+
+    private fun setupRefresh() {
+        binding.srlFetchMiners.setOnRefreshListener {
+            viewModel.doRefresh()
+        }
     }
 
     private fun setupMiners() {
