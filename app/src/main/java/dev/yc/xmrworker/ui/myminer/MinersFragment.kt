@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.google.android.material.snackbar.Snackbar
@@ -35,8 +36,7 @@ class MinersFragment : Fragment() {
     private fun setupEvents() {
         viewModel.errorEvent.observe(viewLifecycleOwner, EventObserver {
             view?.let {
-                Snackbar.make(it, "Something wrong when loading data", Snackbar.LENGTH_LONG)
-                    .show()
+                Snackbar.make(it, "Something wrong when loading data", Snackbar.LENGTH_LONG).show()
             }
         })
 
@@ -48,6 +48,11 @@ class MinersFragment : Fragment() {
     private fun setupObservers() {
         viewModel.minerData.observe(viewLifecycleOwner) {
             adapter.submitList(it)
+        }
+
+        viewModel.empty.observe(viewLifecycleOwner) { isEmpty ->
+            binding.rvMiners.isVisible = !isEmpty
+            binding.tvEmpty.isVisible = isEmpty
         }
     }
 

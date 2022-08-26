@@ -12,6 +12,7 @@ import dev.yc.xmrworker.data.service.SupportXmrService
 import dev.yc.xmrworker.data.service.generator.ServiceGenerator
 import dev.yc.xmrworker.ui.myminer.mineritem.MinerState
 import dev.yc.xmrworker.ui.myminer.mineritem.MinerUiState
+import dev.yc.xmrworker.utils.livedata.Event
 import dev.yc.xmrworker.utils.livedata.SingleEvent
 import dev.yc.xmrworker.utils.livedata.invokeWithPost
 import kotlinx.coroutines.CoroutineDispatcher
@@ -43,6 +44,9 @@ class MinersViewModel(
     private val _refreshedEvent = MutableLiveData<SingleEvent>()
     val refreshedEvent: LiveData<SingleEvent> get() = _refreshedEvent
 
+    private var _empty = MutableLiveData<Boolean>()
+    val empty: LiveData<Boolean> get() = _empty
+
     init {
         fetchMiners()
     }
@@ -58,6 +62,7 @@ class MinersViewModel(
                     mapToMinerState(it)
                 }
                 .collect {
+                    _empty.postValue(it.isEmpty())
                     _minerData.postValue(it)
                     _refreshedEvent.invokeWithPost()
                 }

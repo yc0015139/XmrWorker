@@ -17,13 +17,12 @@ import org.junit.jupiter.api.extension.ExtendWith
 @ExtendWith(InstantExecutorExtension::class)
 class MinersViewModelTest {
     private lateinit var viewModel: MinersViewModel
-    private lateinit var testData: List<MinerUiState>
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Test
     fun fetchMinerData_uiStateSuccess() = runTest {
         // Arrange
-        testData = listOf(
+        val testData = listOf(
             MinerUiState.Success(
                 minerState = MinerState(
                     hash = "7000",
@@ -33,14 +32,6 @@ class MinersViewModelTest {
                 )
             )
         )
-        viewModel = MinersViewModel(
-            address = ADDRESS,
-            repository = FakeSupportXmrRepository(
-                testData = testData,
-                dispatcher = testDispatcher,
-            ),
-            dispatcher = testDispatcher,
-        )
         val excepted = listOf(
             MinerState(
                 hash = "7000",
@@ -49,6 +40,7 @@ class MinersViewModelTest {
                 totalHash = "81130718490",
             )
         )
+        setupViewModel(testData)
 
         // Action
         viewModel.fetchMiners()
@@ -60,18 +52,11 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerDataWithError_errorEventInvoked() = runTest {
         // Arrange
-        testData = listOf(
+        val testData = listOf(
             MinerUiState.Error
         )
-        viewModel = MinersViewModel(
-            address = ADDRESS,
-            repository = FakeSupportXmrRepository(
-                testData = testData,
-                dispatcher = testDispatcher,
-            ),
-            dispatcher = testDispatcher,
-        )
         val excepted = Unit
+        setupViewModel(testData)
 
         // Action
         viewModel.fetchMiners()
@@ -83,18 +68,11 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerDataWithException_errorEventInvoked() = runTest {
         // Arrange
-        testData = listOf(
+        val testData = listOf(
             MinerUiState.Exception
         )
-        viewModel = MinersViewModel(
-            address = ADDRESS,
-            repository = FakeSupportXmrRepository(
-                testData = testData,
-                dispatcher = testDispatcher,
-            ),
-            dispatcher = testDispatcher,
-        )
         val excepted = Unit
+        setupViewModel(testData)
 
         // Action
         viewModel.fetchMiners()
@@ -106,7 +84,7 @@ class MinersViewModelTest {
     @Test
     fun doRefresh_refreshedEventInvoked() {
         // Arrange
-        testData = listOf(
+        val testData = listOf(
             MinerUiState.Success(
                 minerState = MinerState(
                     hash = "7000",
@@ -116,6 +94,54 @@ class MinersViewModelTest {
                 )
             )
         )
+        val excepted = Unit
+        setupViewModel(testData)
+
+        // Action
+        viewModel.doRefresh()
+
+        // Assert
+        assertEquals(excepted, viewModel.refreshedEvent.value?.peekContent())
+    }
+
+    @Test
+    fun fetchMinerWithSuccessData_emptyLivedataWithFalse() {
+        // Arrange
+        val testData = listOf(
+            MinerUiState.Success(
+                minerState = MinerState(
+                    hash = "7000",
+                    id = IDENTIFIER,
+                    lastTimeInTimestamp = 1657266133,
+                    totalHash = "81130718490",
+                )
+            )
+        )
+        val excepted = false
+        setupViewModel(testData)
+
+        // Action
+        viewModel.fetchMiners()
+
+        // Assert
+        assertEquals(excepted, viewModel.empty.value)
+    }
+
+    @Test
+    fun fetchMinerWithEmptyData_emptyLivedataWithTrue() {
+        // Arrange
+        val testData = listOf<MinerUiState>()
+        val excepted = true
+        setupViewModel(testData)
+
+        // Action
+        viewModel.fetchMiners()
+
+        // Assert
+        assertEquals(excepted, viewModel.empty.value)
+    }
+
+    private fun setupViewModel(testData: List<MinerUiState>) {
         viewModel = MinersViewModel(
             address = ADDRESS,
             repository = FakeSupportXmrRepository(
@@ -124,12 +150,5 @@ class MinersViewModelTest {
             ),
             dispatcher = testDispatcher,
         )
-        val excepted = Unit
-
-        // Action
-        viewModel.doRefresh()
-
-        // Assert
-        assertEquals(excepted, viewModel.refreshedEvent.value?.peekContent())
     }
 }
