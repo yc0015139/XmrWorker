@@ -9,7 +9,7 @@ interface SupportXmrDataSource {
         address: String?,
     ): ApiResult<List<String>>
 
-    suspend fun fetchEachMinerDataById(
+    suspend fun fetchMinerDataById(
         address: String?,
         id: String,
     ): ApiResult<MinerData>

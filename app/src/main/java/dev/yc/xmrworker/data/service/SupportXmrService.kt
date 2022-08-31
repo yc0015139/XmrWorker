@@ -45,7 +45,7 @@ interface SupportXmrService {
     */
 
     @GET("api/miner/{address}/stats/{identifier}")
-    suspend fun fetchEachMinerDataByIdentifier(
+    suspend fun fetchEachMinerDataById(
         @Path("address") addressOfWallet: String? = null,
         @Path("identifier") id: String? = null,
     ): Response<MinerData>

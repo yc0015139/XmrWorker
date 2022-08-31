@@ -42,7 +42,7 @@ class SupportXmrServiceTest {
 
     @Test
     fun fetchEachMinerData_idOfMinerIsNotGlobalId() = runTest {
-        val minerDataResp = service.fetchEachMinerDataByIdentifier(
+        val minerDataResp = service.fetchEachMinerDataById(
             addressOfWallet = ADDRESS,
             id = IDENTIFIER,
         )

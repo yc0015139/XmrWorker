@@ -19,12 +19,12 @@ class SupportXmrDataSourceImpl(
         }
     )
 
-    override suspend fun fetchEachMinerDataById(
+    override suspend fun fetchMinerDataById(
         address: String?,
         id: String,
     ) = ApiUtil.executeAndParse(
         apiScope = {
-            service.fetchEachMinerDataByIdentifier(address, id)
+            service.fetchEachMinerDataById(address, id)
         },
         onApiSuccess = { stats ->
             ApiResult.Success(stats)

@@ -33,7 +33,7 @@ class SupportXmrRepositoryImpl(
     ): MutableList<MinerUiState> {
         val miners = mutableListOf<MinerUiState>()
         for (id in ids) {
-            when (val minerDataResult = dataSource.fetchEachMinerDataById(address, id)) {
+            when (val minerDataResult = dataSource.fetchMinerDataById(address, id)) {
                 is ApiResult.Success -> {
                     val minerData = minerDataResult.result
                     miners.add(

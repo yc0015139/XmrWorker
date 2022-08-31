@@ -49,7 +49,7 @@ class SupportXmrDataSourceTest {
 
     @Test
     fun fetchEachMinerData_idOfMinerIsNotGlobalIdOnApiSuccess() = runTest {
-        val apiResult = dataSource.fetchEachMinerDataById(
+        val apiResult = dataSource.fetchMinerDataById(
             address = ADDRESS,
             id = IDENTIFIER,
         )

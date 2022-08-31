@@ -15,7 +15,7 @@ class FakeSupportXmrDataSource(
         }
     }
 
-    override suspend fun fetchEachMinerDataById(
+    override suspend fun fetchMinerDataById(
         address: String?,
         id: String,
     ): ApiResult<MinerData> {
