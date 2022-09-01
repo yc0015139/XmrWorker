@@ -12,7 +12,6 @@ import dev.yc.xmrworker.data.service.SupportXmrService
 import dev.yc.xmrworker.data.service.generator.ServiceGenerator
 import dev.yc.xmrworker.ui.myminer.mineritem.MinerState
 import dev.yc.xmrworker.ui.myminer.mineritem.MinerUiState
-import dev.yc.xmrworker.utils.livedata.Event
 import dev.yc.xmrworker.utils.livedata.SingleEvent
 import dev.yc.xmrworker.utils.livedata.invokeWithPost
 import kotlinx.coroutines.CoroutineDispatcher
@@ -58,30 +57,19 @@ class MinersViewModel(
     fun fetchMiners() {
         viewModelScope.launch(dispatcher) {
             repository.fetchMiners(address)
-                .map {
-                    mapToMinerState(it)
-                }
                 .collect {
-                    _empty.postValue(it.isEmpty())
-                    _minerData.postValue(it)
+                    when (it) {
+                        is MinerUiState.Success -> {
+                            _empty.postValue(it.minerStates.isEmpty())
+                            _minerData.postValue(it.minerStates)
+                        }
+                        else -> {
+                            _empty.postValue(true)
+                            _errorEvent.invokeWithPost()
+                        }
+                    }
                     _refreshedEvent.invokeWithPost()
                 }
         }
     }
-
-    private fun mapToMinerState(uiStates: List<MinerUiState>): List<MinerState> {
-        val miners = mutableListOf<MinerState>()
-        for (uiState in uiStates) {
-            when (uiState) {
-                is MinerUiState.Success -> miners.add(uiState.minerState)
-                else -> {
-                    miners.clear()
-                    _errorEvent.invokeWithPost()
-                    break
-                }
-            }
-        }
-        return miners
-    }
-
 }

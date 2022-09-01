@@ -7,11 +7,13 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 
 class FakeSupportXmrRepository(
-    private val testData: List<MinerUiState> = listOf(),
+    private val testData: MinerUiState? = null,
     private val dispatcher: CoroutineDispatcher,
 ) : SupportXmrRepository {
 
-    override fun fetchMiners(address: String?): Flow<List<MinerUiState>> = flow {
-        emit(testData)
+    override fun fetchMiners(address: String?): Flow<MinerUiState> = flow {
+        testData?.let {
+            emit(it)
+        }
     }.flowOn(dispatcher)
 }

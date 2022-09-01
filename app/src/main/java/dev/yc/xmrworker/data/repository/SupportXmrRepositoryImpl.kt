@@ -14,15 +14,15 @@ class SupportXmrRepositoryImpl(
     private val dispatcher: CoroutineDispatcher,
 ) : SupportXmrRepository {
 
-    override fun fetchMiners(address: String?): Flow<List<MinerUiState>> {
+    override fun fetchMiners(address: String?): Flow<MinerUiState> {
         return flow {
             when (val apiResultOfIds = dataSource.fetchIdentifiers(address)) {
                 is ApiResult.Success -> {
-                    val minerData = fetchMinersByIds(address, apiResultOfIds.result)
-                    emit(minerData)
+                    val minerUiState = fetchMinersByIds(address, apiResultOfIds.result)
+                    emit(minerUiState)
                 }
-                is ApiResult.Error -> emit(listOf(MinerUiState.Error))
-                ApiResult.Exception -> emit(listOf(MinerUiState.Exception))
+                is ApiResult.Error -> emit(MinerUiState.Error)
+                ApiResult.Exception -> emit(MinerUiState.Exception)
             }
         }.flowOn(dispatcher)
     }
@@ -30,24 +30,24 @@ class SupportXmrRepositoryImpl(
     private suspend fun fetchMinersByIds(
         address: String?,
         ids: List<String>,
-    ): MutableList<MinerUiState> {
-        val miners = mutableListOf<MinerUiState>()
+    ): MinerUiState {
+        val miners = mutableListOf<MinerState>()
         for (id in ids) {
             when (val minerDataResult = dataSource.fetchMinerDataById(address, id)) {
                 is ApiResult.Success -> {
-                    val minerData = minerDataResult.result
-                    miners.add(
-                        MinerUiState.Success(
-                            minerState = minerData.let {
-                                MinerState(it.hash, it.id, it.lts, it.totalHash)
-                            }
+                    minerDataResult.result.let {
+                        miners.add(
+                            MinerState(
+                                it.hash, it.id, it.lts, it.totalHash
+                            )
                         )
-                    )
+                    }
+
                 }
-                is ApiResult.Error -> miners.add(MinerUiState.Error)
-                ApiResult.Exception -> miners.add(MinerUiState.Exception)
+                is ApiResult.Error -> return MinerUiState.Error
+                ApiResult.Exception -> return MinerUiState.Exception
             }
         }
-        return miners
+        return MinerUiState.Success(miners)
     }
 }

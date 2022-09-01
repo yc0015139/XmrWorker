@@ -61,17 +61,17 @@ class SupportXmrRepositoryImplTest {
     @Test
     fun fetchMiners_minersAreCurrent() = runTest {
         // Arrange
-        val expected = listOf(
-            MinerUiState.Success(
-                minerState = testData.getValue(IDENTIFIER).run {
+        val expected = MinerUiState.Success(
+            minerStates = testData.getValue(IDENTIFIER).run {
+                listOf(
                     MinerState(
                         hash = hash,
                         id = id,
                         lastTimeInTimestamp = lts,
                         totalHash = totalHash,
                     )
-                }
-            )
+                )
+            }
         )
 
         // Act
@@ -92,9 +92,7 @@ class SupportXmrRepositoryImplTest {
             ),
             dispatcher = testDispatcher
         )
-        val expected = listOf(
-            MinerUiState.Error
-        )
+        val expected = MinerUiState.Error
 
         // Action
         val flow = repository.fetchMiners(ADDRESS)
@@ -114,9 +112,7 @@ class SupportXmrRepositoryImplTest {
             ),
             dispatcher = testDispatcher
         )
-        val expected = listOf(
-            MinerUiState.Exception
-        )
+        val expected = MinerUiState.Exception
 
         // Action
         val flow = repository.fetchMiners(ADDRESS)

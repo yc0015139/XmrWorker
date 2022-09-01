@@ -22,9 +22,9 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerData_uiStateSuccess() = runTest {
         // Arrange
-        val testData = listOf(
-            MinerUiState.Success(
-                minerState = MinerState(
+        val testData = MinerUiState.Success(
+            minerStates = listOf(
+                MinerState(
                     hash = "7000",
                     id = IDENTIFIER,
                     lastTimeInTimestamp = 1657266133,
@@ -52,9 +52,7 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerDataWithError_errorEventInvoked() = runTest {
         // Arrange
-        val testData = listOf(
-            MinerUiState.Error
-        )
+        val testData = MinerUiState.Error
         val excepted = Unit
         setupViewModel(testData)
 
@@ -68,9 +66,7 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerDataWithException_errorEventInvoked() = runTest {
         // Arrange
-        val testData = listOf(
-            MinerUiState.Exception
-        )
+        val testData = MinerUiState.Exception
         val excepted = Unit
         setupViewModel(testData)
 
@@ -84,9 +80,9 @@ class MinersViewModelTest {
     @Test
     fun doRefresh_refreshedEventInvoked() {
         // Arrange
-        val testData = listOf(
-            MinerUiState.Success(
-                minerState = MinerState(
+        val testData = MinerUiState.Success(
+            minerStates = listOf(
+                MinerState(
                     hash = "7000",
                     id = IDENTIFIER,
                     lastTimeInTimestamp = 1657266133,
@@ -107,9 +103,9 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerWithSuccessData_emptyLivedataWithFalse() {
         // Arrange
-        val testData = listOf(
-            MinerUiState.Success(
-                minerState = MinerState(
+        val testData = MinerUiState.Success(
+            minerStates = listOf(
+                MinerState(
                     hash = "7000",
                     id = IDENTIFIER,
                     lastTimeInTimestamp = 1657266133,
@@ -130,7 +126,9 @@ class MinersViewModelTest {
     @Test
     fun fetchMinerWithEmptyData_emptyLivedataWithTrue() {
         // Arrange
-        val testData = listOf<MinerUiState>()
+        val testData = MinerUiState.Success(
+            listOf()
+        )
         val excepted = true
         setupViewModel(testData)
 
@@ -141,7 +139,35 @@ class MinersViewModelTest {
         assertEquals(excepted, viewModel.empty.value)
     }
 
-    private fun setupViewModel(testData: List<MinerUiState>) {
+    @Test
+    fun fetchMinerWithError_emptyLivedataWithTrue() {
+        // Arrange
+        val testData = MinerUiState.Error
+        val excepted = true
+        setupViewModel(testData)
+
+        // Action
+        viewModel.fetchMiners()
+
+        // Assert
+        assertEquals(excepted, viewModel.empty.value)
+    }
+
+    @Test
+    fun fetchMinerWithException_emptyLivedataWithTrue() {
+        // Arrange
+        val testData = MinerUiState.Exception
+        val excepted = true
+        setupViewModel(testData)
+
+        // Action
+        viewModel.fetchMiners()
+
+        // Assert
+        assertEquals(excepted, viewModel.empty.value)
+    }
+
+    private fun setupViewModel(testData: MinerUiState) {
         viewModel = MinersViewModel(
             address = ADDRESS,
             repository = FakeSupportXmrRepository(
