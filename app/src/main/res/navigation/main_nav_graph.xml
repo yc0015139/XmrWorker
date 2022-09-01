@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="dev.yc.xmrworker.ui.main.MainFragment"
+        android:name="dev.yc.xmrworker.ui.myminer.MinersFragment"
         android:label="main_fragment"
-        tools:layout="@layout/main_fragment" />
+        tools:layout="@layout/miner_states_fragment" />
 </navigation>

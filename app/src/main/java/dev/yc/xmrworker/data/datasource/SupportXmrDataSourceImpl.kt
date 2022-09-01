@@ -9,7 +9,7 @@ class SupportXmrDataSourceImpl(
 ) : SupportXmrDataSource {
 
     override suspend fun fetchIdentifiers(
-        address: String,
+        address: String?
     ) = ApiUtil.executeAndParse(
         apiScope = {
             service.fetchIdentifiers(address)
@@ -19,12 +19,12 @@ class SupportXmrDataSourceImpl(
         }
     )
 
-    override suspend fun fetchMinerStatsById(
-        address: String,
+    override suspend fun fetchMinerDataById(
+        address: String?,
         id: String,
     ) = ApiUtil.executeAndParse(
         apiScope = {
-            service.fetchMinerStatByIdentifier(address, id)
+            service.fetchEachMinerDataById(address, id)
         },
         onApiSuccess = { stats ->
             ApiResult.Success(stats)
